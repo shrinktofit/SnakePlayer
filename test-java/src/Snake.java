@@ -1,3 +1,4 @@
+package com.wk.snake.src
 public class Snake{
     public Vec2 vec2;
     public SnakeBodySegement[] bodys;
@@ -24,10 +25,5 @@ public class Snake{
         //     bodys1[1]=new SnakeBodySegement(Direction.right,20);
         //     Snake snake1 = new Snake(vec,bodys1);
         // }
-    }
-
-
-    public static void drawSnake(Snake snake,int weight,int height){
-
     }
 }

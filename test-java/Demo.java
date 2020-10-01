@@ -1,5 +1,13 @@
 public class Demo{
     public static void main(String[] args) {
+        
+    }
+
+    public static void drawSnake(Snake snake,int weight,int height){
+
+    }
+
+    public static void screenTest(Snake snake,int weight,int height){
         char chars[][] = new char[100][100];
         for (int i = 0;i < chars.length; i++) {
             for (int j = 0;j < chars[i].length; j++) {
