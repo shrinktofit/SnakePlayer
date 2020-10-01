@@ -1,3 +1,4 @@
+import {drawSnake} from"./DrawSnake" ;
 let gameScreen:string[][]= new Array(100);
 let trim:String = "";
 for (let i = 0; i < gameScreen.length; i++) {
@@ -20,4 +21,5 @@ for (let i = 0;i < gameScreen.length; i++) {
     }
     trim+="\n"
 }
+drawSnake
 console.log(trim);

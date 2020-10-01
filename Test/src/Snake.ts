@@ -1,12 +1,12 @@
 import {Vec2} from "./Vec2"
-enum Direction {
+export enum Direction {
     up,
     down,
     left,
     right,
 }
 
-class SnakeBodySegment {
+export class SnakeBodySegment {
     /**
      * 身子节的方向。
      */
@@ -20,10 +20,10 @@ class SnakeBodySegment {
 }
 
 export class Snake {
-    public vec2: Vec2;
+    public head: Vec2;
     public body: SnakeBodySegment[];
-    constructor(ver2:Vec2,body:SnakeBodySegment[]){
-        this.vec2=ver2;
+    constructor(head:Vec2,body:SnakeBodySegment[]){
+        this.head=head;
         this.body=body;
     }
 }

@@ -1,4 +1,6 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var DrawSnake_1 = require("./DrawSnake");
 var gameScreen = new Array(100);
 var trim = "";
 for (var i = 0; i < gameScreen.length; i++) {
@@ -21,4 +23,5 @@ for (var i = 0; i < gameScreen.length; i++) {
     }
     trim += "\n";
 }
+DrawSnake_1.drawSnake;
 console.log(trim);
