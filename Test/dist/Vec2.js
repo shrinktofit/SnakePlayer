@@ -9,3 +9,4 @@ var Vec2 = /** @class */ (function () {
     return Vec2;
 }());
 exports.Vec2 = Vec2;
+//# sourceMappingURL=Vec2.js.map

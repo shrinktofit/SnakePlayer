@@ -21,6 +21,32 @@ var Snake = /** @class */ (function () {
         this.head = head;
         this.body = body;
     }
+    /**
+     * 行动一步
+     */
+    Snake.prototype.step = function () {
+        switch (this.body[0].direction) {
+            case Direction.up:
+                this.head.y++;
+                break;
+            case Direction.down:
+                this.head.y--;
+                break;
+            case Direction.left:
+                this.head.x++;
+                break;
+            case Direction.right:
+                this.head.x--;
+                break;
+        }
+        this.body[0].length++;
+        this.body[length - 1].length--;
+        if (this.body[length - 1].length == 0) {
+            this.body.pop();
+        }
+    };
+    ;
     return Snake;
 }());
 exports.Snake = Snake;
+//# sourceMappingURL=Snake.js.map

@@ -1,25 +1,14 @@
-import {drawSnake} from"./DrawSnake" ;
-let gameScreen:string[][]= new Array(100);
-let trim:String = "";
-for (let i = 0; i < gameScreen.length; i++) {
-    gameScreen[i]=new Array(90);
-}
-for (let i = 0;i < gameScreen.length; i++) {
-    for (let j = 0;j < gameScreen[i].length; j++) {
-        gameScreen[i][j]=' ';
-    }
-}
-for (let i = 3; i < 10; i++) {
-    gameScreen[i][3]='*';
-}
-for (let i = 3; i < 20; i++) {
-    gameScreen[4][i]='*';
-}
-for (let i = 0;i < gameScreen.length; i++) {
-    for (let j = 0;j < gameScreen[i].length; j++) {
-        trim+=gameScreen[i][j];
-    }
-    trim+="\n"
-}
-drawSnake
-console.log(trim);
+import { drawSnake } from "./DrawSnake";
+import { Snake, SnakeBodySegment, Direction } from "./Snake";
+import { Vec2 } from "./Vec2";
+let snake: Snake = new Snake(
+    new Vec2(28, 9),
+    [new SnakeBodySegment(Direction.right, 2), new SnakeBodySegment(Direction.down, 5),
+    new SnakeBodySegment(Direction.left, 5)
+        , new SnakeBodySegment(Direction.down, 5)]);
+;
+// drawSnake(snake, 50, 50);
+setInterval(function(){
+    snake.step(); //前进一步
+    drawSnake(snake, 50,50); //画
+}, 3000)
