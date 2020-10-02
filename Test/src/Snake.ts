@@ -45,8 +45,8 @@ export class Snake {
                 break;
         }
         this.body[0].length ++;
-        this.body[length-1].length --;
-        if (this.body[length-1].length==0) {
+        this.body[this.body.length-1].length --;
+        if (this.body[this.body.length-1].length==0) {
             this.body.pop();
         }
     };
