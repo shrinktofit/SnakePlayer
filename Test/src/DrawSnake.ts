@@ -12,13 +12,13 @@ export function drawSnake(snake: Snake, wight: number, height: number) {
     }
     for (let i = 0; i < gameScreen.length; i++) {
         for (let j = 0; j < gameScreen[i].length; j++) {
-            gameScreen[i][j] = ' ';
+            gameScreen[i][j] = '  ';
         }
     }
     /**
      * 蛇头填充
      */
-    gameScreen[cursor.y][cursor.x] = '*';
+    gameScreen[cursor.y][cursor.x] = '* ';
 
     /**
      * 蛇身体填充
@@ -39,7 +39,7 @@ export function drawSnake(snake: Snake, wight: number, height: number) {
                     cursor.x++;
                     break;
             }
-            gameScreen[cursor.y][cursor.x] = '+';
+            gameScreen[cursor.y][cursor.x] = '+ ';
         }
 
     }

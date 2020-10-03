@@ -3,21 +3,18 @@ import { Snake, SnakeBodySegment, Direction } from "./Snake";
 import { Vec2 } from "./Vec2";
 let snake: Snake = new Snake(
     new Vec2(28, 9),
-    [new SnakeBodySegment(Direction.right, 2), new SnakeBodySegment(Direction.down, 5),
-    new SnakeBodySegment(Direction.left, 5)
-        , new SnakeBodySegment(Direction.down, 5)]);
+    [new SnakeBodySegment(Direction.right, 2),
+        new SnakeBodySegment(Direction.up, 5),
+        new SnakeBodySegment(Direction.right, 15),
+    ]);
 ;
 // drawSnake(snake, 50, 50);
-// setInterval(function(){
-//     snake.step(); //前进一步
-//     drawSnake(snake, 50,50); //画
-// }, 3000)
 
 
 drawSnake(snake,50,50);
+let direction: Direction|null = null;
 process.stdin.on('data', (keyBin) => {
     const key = keyBin.toString().trim();
-    let direction :Direction;
     switch (key) {
         case "w":
             direction = Direction.up;
@@ -34,6 +31,13 @@ process.stdin.on('data', (keyBin) => {
         default:
             return;
     }
-    snake.turn(direction);
-    drawSnake(snake,50,50);
 })
+setInterval(() => {
+    if (direction != null) {
+        snake.turn(direction);
+        direction = null;
+    }else{
+        snake.step(); //前进一步
+    }
+    drawSnake(snake, 50,50); //画
+}, 1500)

@@ -40,10 +40,7 @@ var Snake = /** @class */ (function () {
                 break;
         }
         this.body[0].length++;
-        this.body[this.body.length - 1].length--;
-        if (this.body[this.body.length - 1].length == 0) {
-            this.body.pop();
-        }
+        this._decreaseLastBody();
     };
     /**
      * 转向
@@ -62,8 +59,25 @@ var Snake = /** @class */ (function () {
             && (this.body[0].direction == Direction.up || this.body[0].direction == Direction.down)) {
             return;
         }
-        this.body.unshift(new SnakeBodySegment(direction, 1));
-        this.body[1].length--;
+        //direction为蛇的行动方向，bodydirection为蛇身体的方向，
+        //蛇身体的方向是和蛇行动方向相反
+        var bodyDirection;
+        switch (direction) {
+            case Direction.up:
+                bodyDirection = Direction.down;
+                break;
+            case Direction.down:
+                bodyDirection = Direction.up;
+                break;
+            case Direction.left:
+                bodyDirection = Direction.right;
+                break;
+            case Direction.right:
+                bodyDirection = Direction.left;
+                break;
+        }
+        this.body.unshift(new SnakeBodySegment(bodyDirection, 1));
+        this._decreaseLastBody();
         //改变蛇头位置
         switch (direction) {
             case Direction.up:
@@ -78,6 +92,15 @@ var Snake = /** @class */ (function () {
             case Direction.right:
                 this.head.x++;
                 break;
+        }
+    };
+    /**
+     * 最后一段长度-1，且当最后一段为0是，删掉最后为0的身体
+     */
+    Snake.prototype._decreaseLastBody = function () {
+        this.body[this.body.length - 1].length--;
+        if (this.body[this.body.length - 1].length == 0) {
+            this.body.pop();
         }
     };
     return Snake;

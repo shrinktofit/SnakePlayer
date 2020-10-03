@@ -16,13 +16,13 @@ function drawSnake(snake, wight, height) {
     }
     for (var i = 0; i < gameScreen.length; i++) {
         for (var j = 0; j < gameScreen[i].length; j++) {
-            gameScreen[i][j] = ' ';
+            gameScreen[i][j] = '  ';
         }
     }
     /**
      * 蛇头填充
      */
-    gameScreen[cursor.y][cursor.x] = '*';
+    gameScreen[cursor.y][cursor.x] = '* ';
     /**
      * 蛇身体填充
      */
@@ -42,7 +42,7 @@ function drawSnake(snake, wight, height) {
                     cursor.x++;
                     break;
             }
-            gameScreen[cursor.y][cursor.x] = '+';
+            gameScreen[cursor.y][cursor.x] = '+ ';
         }
     }
     // 打印出来看效果
