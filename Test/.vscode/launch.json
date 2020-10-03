@@ -19,7 +19,8 @@
             "windows":
             {
                 "program": "${workspaceFolder}\\dist\\index.js",
-            }
+            },
+            "console": "integratedTerminal",
         }
     ]
 }

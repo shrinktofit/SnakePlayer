@@ -43,9 +43,6 @@ export function drawSnake(snake: Snake, wight: number, height: number) {
         }
 
     }
-    
-    
-
     // 打印出来看效果
     for (let i = 0; i < gameScreen.length; i++) {
         for (let j = 0; j < gameScreen[i].length; j++) {
