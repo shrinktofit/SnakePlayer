@@ -5,13 +5,16 @@ import { Vec2 } from "../Vec2";
 @_decorator.ccclass("Game")
 export class Game extends Component {
     @_decorator.property(Node)
-    public cube: Node = null;
+    public snakeBodySegmentModel: Node = null;
 
     @_decorator.property(Node)
     public foodModel: Node = null;
 
+    @_decorator.property(Node)
+    public snakeHeadModel: Node = null;
+
     start() {
-        this._snake = new Snake(new Vec2(25, 25), [
+        this._snake = new Snake(new Vec2(12, 12), [
             new SnakeBodySegment(Direction.right, 5),
             new SnakeBodySegment(Direction.up, 3),
         ]);
@@ -23,13 +26,17 @@ export class Game extends Component {
         this._foodNode.active = true;
         this._foodNode.setParent(this.node.parent);
 
+        this._headNode = instantiate(this.snakeHeadModel);
+        this._headNode.active = true;
+        this._headNode.setParent(this.node.parent);
+
         systemEvent.on(SystemEventType.KEY_UP, (event) => {
             let direction: Direction | null = null;
             switch (event.rawEvent.key) {
-                case 'w': direction = Direction.up; break;
-                case 'a': direction = Direction.left; break;
-                case 's': direction = Direction.down; break;
-                case 'd': direction = Direction.right; break;
+                case 'w': case 'W': direction = Direction.up; break;
+                case 'a': case 'A': direction = Direction.left; break;
+                case 's': case 'S': direction = Direction.down; break;
+                case 'd': case 'D': direction = Direction.right; break;
             }
             if (direction !== null) {
                 if (direction === flipDirection(this._snake.body[0].direction)) {
@@ -63,36 +70,49 @@ export class Game extends Component {
         for (const node of this._bodyBuffer) {
             node.active = false;
         }
+        this._renderHead(snake.head);
         let currentStart = snake.head.clone();
         for (let iSegment = 0; iSegment < nSegments; ++iSegment) {
             const segment = snake.body[iSegment];
             const node = this._bodyBuffer[iSegment];
-            let scale: Vec3;
+            let { x: posX, y: posY } = currentStart;
+            let scaleX = 1;
+            let scaleY = 1;
+            const lenSeg = segment.length;
             switch (segment.direction) {
                 case Direction.left:
-                    scale = new Vec3(segment.length, 1, 1);
-                    node.setPosition(new Vec3(currentStart.x - segment.length / 2, 0.5, currentStart.y));
-                    currentStart.x -= segment.length;
+                    posX = currentStart.x - lenSeg;
+                    scaleX = lenSeg;
+
+                    currentStart.x -= lenSeg;
                     break;
                 case Direction.right:
-                    scale = new Vec3(segment.length, 1, 1);
-                    node.setPosition(new Vec3(currentStart.x + segment.length / 2, 0.5, currentStart.y));
-                    currentStart.x += segment.length;
+                    posX = currentStart.x + 1;
+                    scaleX = lenSeg;
+
+                    currentStart.x += lenSeg;
                     break;
                 case Direction.up:
-                    scale = new Vec3(1, 1, segment.length);
-                    node.setPosition(new Vec3(currentStart.x, 0.5, currentStart.y - segment.length / 2));
-                    currentStart.y -= segment.length;
+                    posY = currentStart.y - lenSeg;
+                    scaleY = lenSeg;
+
+                    currentStart.y -= lenSeg;
                     break;
                 case Direction.down:
-                    scale = new Vec3(1, 1, segment.length);
-                    node.setPosition(new Vec3(currentStart.x, 0.5, currentStart.y + segment.length / 2));
-                    currentStart.y += segment.length;
+                    posY = currentStart.y + 1;
+                    scaleY = lenSeg;
+
+                    currentStart.y += lenSeg;
                     break;
             }
-            node.setScale(scale);
+            node.setPosition(posX, node.position.y, posY);
+            node.setScale(scaleX, node.scale.y, scaleY);
             node.active = true;
         }
+    }
+
+    private _renderHead(head: Vec2) {
+        this._headNode.setPosition(head.x, 0, head.y);
     }
 
     private _renderFood(food: Vec2) {
@@ -100,7 +120,7 @@ export class Game extends Component {
     }
 
     private _createBody(): Node {
-        const node = instantiate(this.cube);
+        const node = instantiate(this.snakeBodySegmentModel);
         node.setParent(this.node.parent);
         node.active = true;
         return node;
@@ -117,6 +137,7 @@ export class Game extends Component {
 
     private _snake: Snake;
     private _food: Vec2;
+    private _headNode: Node;
     private _bodyBuffer: Node[] = [];
     private _foodNode: Node;
 }

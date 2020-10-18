@@ -107,21 +107,7 @@ export class Snake {
         }
         //direction为蛇的行动方向，bodydirection为蛇身体的方向，
         //蛇身体的方向是和蛇行动方向相反
-        let bodyDirection: Direction;
-        switch (direction) {
-            case Direction.up:
-                bodyDirection = Direction.down;
-                break;
-            case Direction.down:
-                bodyDirection = Direction.up;
-                break;
-            case Direction.left:
-                bodyDirection = Direction.right;
-                break;
-            case Direction.right:
-                bodyDirection = Direction.left;
-                break;
-        }
+        const bodyDirection = flipDirection(direction);
         this.body.unshift(new SnakeBodySegment(bodyDirection, 1));
         this._decreaseLastBody();
 
@@ -193,8 +179,9 @@ export class Snake {
      * 最后一段长度-1，且当最后一段为0是，删掉最后为0的身体
      */
     private _decreaseLastBody() {
-        this.body[this.body.length - 1].length--;
-        if (this.body[this.body.length - 1].length == 0) {
+        const lastBody = this.body[this.body.length - 1];
+        lastBody.length--;
+        if (lastBody.length == 0) {
             this.body.pop();
         }
     }
