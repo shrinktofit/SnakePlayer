@@ -1,5 +1,6 @@
 {
   "name": "Client",
   "type": "3d",
-  "uuid": "77b5c67a-e472-4fca-893a-5840aa378242"
+  "uuid": "77b5c67a-e472-4fca-893a-5840aa378242",
+  "version": "1.2.0"
 }

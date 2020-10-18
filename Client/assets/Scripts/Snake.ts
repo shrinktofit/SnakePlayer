@@ -6,6 +6,15 @@ export enum Direction {
     left,
     right,
 }
+export function flipDirection(direction: Direction) {
+    switch (direction) {
+        case Direction.right: return Direction.left;
+        case Direction.left: return Direction.right;
+        case Direction.up: return Direction.down;
+        case Direction.down: return Direction.up;
+    }
+}
+
 export class SnakeBodySegment {
     /**
      * 身子节的方向。
@@ -46,6 +55,37 @@ export class Snake {
         }
         this.body[0].length++;
         this._decreaseLastBody();
+    }
+
+    /**
+     * 
+     *    *-------
+     *   *--------
+     * 
+     *     *
+     *   * |
+     *   | |
+     *   
+     * 
+     * 触碰食物,第一段身体长度+1
+     * 头部坐标对应调1
+     */
+    public grow(){
+        switch (this.body[0].direction) {
+            case Direction.up:
+                this.head.y++;
+                break;
+            case Direction.down:
+                this.head.y--;
+                break; 
+            case Direction.left:
+                this.head.x++;
+                break; 
+            case Direction.right:
+                this.head.x--;
+                break;
+        }
+        this.body[0].length++;
     }
 
     /**
@@ -135,7 +175,20 @@ export class Snake {
 
         return points;
     }
-
+    /**
+     * 判断食物是否与身体重合
+     * true 为重合
+     */
+    public includesPoint(point: Vec2): boolean {
+        const points = this.getPoints();
+        for (let i = 0; i < points.length; i++) {
+            if (points[i].equal(point)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
     /**
      * 最后一段长度-1，且当最后一段为0是，删掉最后为0的身体
      */
