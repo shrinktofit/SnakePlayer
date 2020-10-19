@@ -3,12 +3,12 @@ import fs from "fs";
 import { Vec2 } from "./Vec2";
 
 
-export function drawSnake(snake: Snake, wight: number, height: number) {
+export function drawSnake(snake: Snake, width: number, height: number) {
     let gameScreen: string[][] = new Array(height);
     let trim: string = "";
     let cursor:Vec2= new Vec2(snake.head.x,snake.head.y);
     for (let i = 0; i < gameScreen.length; i++) {
-        gameScreen[i] = new Array(wight);
+        gameScreen[i] = new Array(width);
     }
     for (let i = 0; i < gameScreen.length; i++) {
         for (let j = 0; j < gameScreen[i].length; j++) {

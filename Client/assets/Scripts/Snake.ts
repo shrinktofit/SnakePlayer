@@ -152,13 +152,6 @@ export class Snake {
                 points.push(currentPoint.clone());  
             }          
         }  
-        let food: Vec2 = new Vec2(0,0);
-        //
-        if (food.equal(points[0])) {
-            
-        }
-        Vec2.equal2(food,points[0]);
-
         return points;
     }
     /**
@@ -174,7 +167,34 @@ export class Snake {
         }
         return false;
     }
-    
+    /**
+     * 判断蛇头是否与身体重合
+     * true 为重合
+     */
+    public isSelfKilled(): boolean {
+        const points = this.getPoints();
+        // points.shift();
+        // 排除蛇头,即从第二点开始计算
+        for (let i = 1; i < points.length; i++) {
+            if (points[i].equal(this.head)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 判断蛇头是否与边界重合/超出
+     */
+    public isOutOfBounds(width: number,height: number){
+        if ((0<=this.head.x&&this.head.x<width) &&(0<=this.head.y&&this.head.y<height)) {
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+
     /**
      * 最后一段长度-1，且当最后一段为0是，删掉最后为0的身体
      */

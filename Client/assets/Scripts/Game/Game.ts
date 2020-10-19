@@ -1,4 +1,4 @@
-import { Component, instantiate, Node, systemEvent, SystemEventType, Vec3, _decorator } from "cc";
+import { Component, game, instantiate, Label, Node, systemEvent, SystemEventType, Vec3, _decorator } from "cc";
 import { Direction, flipDirection, Snake, SnakeBodySegment } from "../Snake";
 import { Vec2 } from "../Vec2";
 
@@ -13,7 +13,15 @@ export class Game extends Component {
     @_decorator.property(Node)
     public snakeHeadModel: Node = null;
 
+    @_decorator.property(Node)
+    public gameOverUi: Node = null;
+
+
+    public width: number = 25;
+    public height: number = 25;
+    public score: number = 0;
     start() {
+
         this._snake = new Snake(new Vec2(12, 13), [
             new SnakeBodySegment(Direction.right, 5),
             new SnakeBodySegment(Direction.up, 3),
@@ -49,14 +57,24 @@ export class Game extends Component {
             if (this._snake.head.equal(this._food)) {
                 this._snake.grow();
                 this._generateFood();
+                this.score+=10;
             }
 
         });
     }
 
-    update () {
+    update() {
         this._render(this._snake);
         this._renderFood(this._food);
+
+        if ((this._snake.isOutOfBounds(this.width, this.height)) ||
+            this._snake.isSelfKilled()) {
+            this.gameOverUi.active = true;
+            const labelComponent = this.gameOverUi.getComponent(Label);
+            labelComponent.string = `最终得分为: ${this.score},你真牛逼呀!`;
+            game.pause();
+        }
+
     }
 
     private _render(snake: Snake) {
@@ -125,13 +143,13 @@ export class Game extends Component {
         node.active = true;
         return node;
     }
-    private _generateFood(){
+    private _generateFood() {
         while (true) {
-            this._food.x = Math.round(Math.random()*(25-1));
-            this._food.y = Math.round(Math.random()*(25-1));
+            this._food.x = Math.round(Math.random() * (this.width - 1));
+            this._food.y = Math.round(Math.random() * (this.height - 1));
             if (!this._snake.includesPoint(this._food)) {
                 return;
-            } 
+            }
         }
     }
 
