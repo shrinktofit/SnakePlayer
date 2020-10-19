@@ -14,7 +14,7 @@ export class Game extends Component {
     public snakeHeadModel: Node = null;
 
     start() {
-        this._snake = new Snake(new Vec2(12, 12), [
+        this._snake = new Snake(new Vec2(12, 13), [
             new SnakeBodySegment(Direction.right, 5),
             new SnakeBodySegment(Direction.up, 3),
         ]);
@@ -127,8 +127,8 @@ export class Game extends Component {
     }
     private _generateFood(){
         while (true) {
-            this._food.x = Math.round(Math.random()*50);
-            this._food.y = Math.round(Math.random()*50);
+            this._food.x = Math.round(Math.random()*(25-1));
+            this._food.y = Math.round(Math.random()*(25-1));
             if (!this._snake.includesPoint(this._food)) {
                 return;
             } 
