@@ -1,5 +1,6 @@
 import { Component, game, instantiate, Label, Node, systemEvent, SystemEventType, Vec3, _decorator } from "cc";
 import { Direction, flipDirection, Snake, SnakeBodySegment } from "../Snake";
+import { SnakeRenderer } from "../SnakeRenderer";
 import { Vec2 } from "../Vec2";
 
 @_decorator.ccclass("Game")
@@ -20,7 +21,10 @@ export class Game extends Component {
     public width: number = 25;
     public height: number = 25;
     public score: number = 0;
+
+    private _snakeRenderer!: SnakeRenderer;
     start() {
+        this._snakeRenderer = new SnakeRenderer(this.node);
 
         this._snake = new Snake(new Vec2(12, 13), [
             new SnakeBodySegment(Direction.right, 5),
@@ -78,6 +82,9 @@ export class Game extends Component {
     }
 
     private _render(snake: Snake) {
+        // this._snakeRenderer.render(snake);
+        // return;
+
         const nSegments = snake.body.length;
         if (nSegments > this._bodyBuffer.length) {
             const nDiff = nSegments - this._bodyBuffer.length;
