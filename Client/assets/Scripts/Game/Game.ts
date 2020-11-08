@@ -1,4 +1,4 @@
-import { Component, game, instantiate, Label, Node, _decorator } from "cc";
+import { AudioSource, Component, game, instantiate, Label, Node, _decorator } from "cc";
 import { Direction, flipDirection, Snake, SnakeBodySegment } from "../Snake";
 import { Vec2 } from "../Vec2";
 import { Input } from "./Input";
@@ -19,6 +19,18 @@ export class Game extends Component {
 
     @_decorator.property(Input)
     public input: Input = null!;
+
+    @_decorator.property(AudioSource)
+    public bgmAudio: AudioSource = null!;
+
+    @_decorator.property(AudioSource)
+    public eatAudio: AudioSource = null!;
+
+    @_decorator.property(AudioSource)
+    public defeatAudio: AudioSource = null!;
+
+    @_decorator.property(AudioSource)
+    public prohibitedAudio: AudioSource = null!;
 
     public width: number = 25;
     public height: number = 25;
@@ -50,7 +62,9 @@ export class Game extends Component {
                 case 'd': direction = Direction.right; break;
             }
             if (direction !== null) {
-                if (direction === flipDirection(this._snake.body[0].direction)) {
+                if (direction === this._snake.body[0].direction) {
+                    this.prohibitedAudio.play();
+                } else if (direction === flipDirection(this._snake.body[0].direction)) {
                     this._snake.step();
                 } else {
                     this._snake.turn(direction);
@@ -61,6 +75,7 @@ export class Game extends Component {
                 this._snake.grow();
                 this._generateFood();
                 this.score+=10;
+                this.eatAudio.play();
             }
         });
     }
@@ -74,6 +89,8 @@ export class Game extends Component {
             this.gameOverUi.active = true;
             const labelComponent = this.gameOverUi.getComponent(Label);
             labelComponent.string = `最终得分为: ${this.score},你真牛逼呀!`;
+            this.bgmAudio.pause();
+            this.defeatAudio.play();
             game.pause();
         }
 
