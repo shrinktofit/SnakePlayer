@@ -1230,7 +1230,7 @@
         "__uuid__": "3b6596df-e3d4-4894-99d1-86436f2eb2c0@d89d2"
       }
     ],
-    "count": 1,
+    "count": 5,
     "wanderingRadius": 25,
     "center": {
       "__type__": "cc.Vec3",
